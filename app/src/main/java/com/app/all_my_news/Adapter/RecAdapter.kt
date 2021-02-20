@@ -1,6 +1,5 @@
-package com.app.all_my_news
+package com.app.all_my_news.Adapter
 
-import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -8,10 +7,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.app.all_my_news.RecAdapter.RecViewHolder
+import com.app.all_my_news.Adapter.RecAdapter.RecViewHolder
+import com.app.all_my_news.R
+import com.app.all_my_news.Model.Section
 import com.squareup.picasso.Picasso
-import java.io.InputStream
-import java.net.URL
 
 
 class RecAdapter(private val list: List<Section>?) : RecyclerView.Adapter<RecViewHolder>() {
