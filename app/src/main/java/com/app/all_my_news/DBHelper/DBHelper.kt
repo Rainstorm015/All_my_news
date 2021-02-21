@@ -16,12 +16,14 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DATABESE_NAME, null,
         private val TABLE_NAME = "NewsApiInfo"
         private val COL_ID = "id"
         private val COL_KEY = "key"
+        private val COL_COUNTRY = "country"
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
         val CREATE_TABLE_QUERY: String = ("CREATE TABLE $TABLE_NAME (" +
                 "$COL_ID INTEGER PRIMARY KEY," +
-                "$COL_KEY TEXT)")
+                "$COL_KEY TEXT," +
+                "$COL_COUNTRY TEXT)")
         db!!.execSQL(CREATE_TABLE_QUERY)
     }
 
@@ -42,6 +44,7 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DATABESE_NAME, null,
                     val newsApiInfo = NewsApiInfo()
                     newsApiInfo.id = cursor.getInt(cursor.getColumnIndex(COL_ID))
                     newsApiInfo.key = cursor.getString(cursor.getColumnIndex(COL_KEY))
+                    newsApiInfo.country = cursor.getString(cursor.getColumnIndex(COL_COUNTRY))
                     listNewsApiInfo.add(newsApiInfo)
                 } while(cursor.moveToNext())
             }
@@ -54,6 +57,7 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DATABESE_NAME, null,
         val values = ContentValues()
         values.put(COL_ID, newsApiInfo.id)
         values.put(COL_KEY, newsApiInfo.key)
+        values.put(COL_COUNTRY, newsApiInfo.country)
 
         db.insert(TABLE_NAME, null, values)
         db.close()
@@ -64,6 +68,7 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DATABESE_NAME, null,
         val values = ContentValues()
         values.put(COL_ID, newsApiInfo.id)
         values.put(COL_KEY, newsApiInfo.key)
+        values.put(COL_COUNTRY, newsApiInfo.country)
 
         return db.update(TABLE_NAME, values, "$COL_ID=?", arrayOf(newsApiInfo.id.toString()))
     }
