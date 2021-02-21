@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity()  {
     private var sectionList: MutableList<Section> = mutableListOf()
     private var adapter = RecAdapter(sectionList)
     private var apiKey: String = ""
+    private var country: String = "fr"
     private lateinit var error_api: TextView
     private lateinit var refreshLayout: SwipeRefreshLayout
     internal lateinit var db: DBHelper
@@ -79,9 +80,11 @@ class MainActivity : AppCompatActivity()  {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
         recyclerView.setHasFixedSize(true)
+        if(country == ""){
+            country = "fr"
+        }
 
-
-        val url: String = "https://newsapi.org/v2/top-headlines?country=fr&apiKey=$apiKey"
+        val url: String = "https://newsapi.org/v2/top-headlines?country=$country&apiKey=$apiKey"
         Log.d("API Key", apiKey)
         Log.d("URL", url)
         val request: Request = Request.Builder()
@@ -134,6 +137,12 @@ class MainActivity : AppCompatActivity()  {
             listNewsApiInfo[0].key
         } else {
             ""
+        }
+
+        country = if(!listNewsApiInfo.isEmpty()){
+            listNewsApiInfo[0].country
+        } else {
+            "fr"
         }
 
     }
