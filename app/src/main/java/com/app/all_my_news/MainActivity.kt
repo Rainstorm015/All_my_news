@@ -117,7 +117,7 @@ class MainActivity : AppCompatActivity()  {
                         val description = jsonObject.optString("description")
                         val url = jsonObject.optString("url")
                         val urlToImage = jsonObject.optString("urlToImage")
-                        sectionList.add(Section(title, description, urlToImage, false))
+                        sectionList.add(Section(this@MainActivity,title, description, urlToImage, url, true))
                     }
                     runOnUiThread {
                         error_api.isVisible = false

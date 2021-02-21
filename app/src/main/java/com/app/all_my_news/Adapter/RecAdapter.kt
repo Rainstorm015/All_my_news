@@ -1,11 +1,14 @@
 package com.app.all_my_news.Adapter
 
+import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.app.all_my_news.Adapter.RecAdapter.RecViewHolder
 import com.app.all_my_news.R
@@ -32,8 +35,11 @@ class RecAdapter(private val list: List<Section>?) : RecyclerView.Adapter<RecVie
         val section = list!![position]
         holder.bind(section)
         holder.itemView.setOnClickListener { v: View? ->
-            section.expanded = !section.expanded
-            notifyItemChanged(position)
+            //section.expanded = !section.expanded
+            //notifyItemChanged(position)
+            val openURL = Intent(Intent.ACTION_VIEW)
+            openURL.data = Uri.parse(section.url)
+            startActivity(section.context, openURL, null)
         }
     }
 
@@ -47,14 +53,9 @@ class RecAdapter(private val list: List<Section>?) : RecyclerView.Adapter<RecVie
         private val subItem: View = itemView.findViewById(R.id.sub_item)
         private val image: ImageView = itemView.findViewById(R.id.imageView)
         fun bind(section: Section) {
-            //val recview : RecyclerView = itemView.rootView.findViewById(R.id.recview)!!
-            /*for(section in recview){
-
-            }*/
-            //Log.d("Child count",""+ recview.childCount)
             subItem.visibility = if (section.expanded) View.VISIBLE else View.GONE
             title.text = section.title
-            description.text = section.content
+            description.text = if (section.content != null && section.content != "null") section.content else ""
             Picasso.get().load(section.imgUrl).into(image)
         }
     }
